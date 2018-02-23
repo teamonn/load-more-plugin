@@ -5,11 +5,21 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    list: []
   },
   mutations: {
     increment (state) {
-      state.count++
+      // state.count++
+    }
+  },
+  actions: {
+    request (context) {
+      // 模拟 http 请求，加入数据到 list
+      for (let i = 0; i < 10; i++) {
+        context.state.list.push({
+          name: '列表'
+        })
+      }
     }
   }
 })

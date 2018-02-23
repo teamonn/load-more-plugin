@@ -1,25 +1,31 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png" @click="increment(count)">
-    <h2>{{count}}</h2>
+    <ul class="data-list">
+      <li v-for="(item, key) in list" :key="key">假数据 {{key}}</li>
+    </ul>
+    <!-- <img src="./assets/logo.png" @click="increment(count)"> -->
     <!-- <load-more/> -->
   </div>
 </template>
 
 <script>
 // import LoadMore from './components/LoadMore'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'App',
   computed: mapState({
-    count: state => state.count
+    list: state => state.list
   }),
+  created () {
+    this.request()
+  },
   methods: {
     ...mapMutations(['increment']),
-    add () {
-      this.$store.commit('increment', this.count)
-    }
+    ...mapActions(['request'])
+    // add () {
+    //   this.$store.commit('increment', this.count)
+    // }
   },
   components: {
     // LoadMore
@@ -27,13 +33,16 @@ export default {
 }
 </script>
 
+<style src="./assets/css/reset.css"></style>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+ul.data-list li {
+  padding: 8px 12px;
+  font-size: 17px;
 }
 </style>
