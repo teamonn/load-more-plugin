@@ -2,9 +2,8 @@
   <div id="app">
     <h2>load-more-plugin 插件实例</h2>
     <ul class="data-list" id="wrapper">
-      <li v-for="(item, key) in list" :key="key">假数据 {{key+1}}</li>
+      <li v-for="(item, key) in list" :key="key">{{`${item.name} ${key+1}`}}</li>
     </ul>
-    <!-- <img src="./assets/logo.png" @click="increment(count)"> -->
     <load-more wrap="wrapper" :request="request" />
   </div>
 </template>
@@ -25,9 +24,6 @@ export default {
   methods: {
     ...mapMutations(['increment']),
     ...mapActions(['request'])
-    // add () {
-    //   this.$store.commit('increment', this.count)
-    // }
   },
   components: {
     LoadMore

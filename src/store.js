@@ -3,6 +3,10 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+// 限制模拟请求的最大数据量
+let TOTAL = 100
+let currentNum = 0
+
 const store = new Vuex.Store({
   state: {
     list: [],
@@ -10,18 +14,35 @@ const store = new Vuex.Store({
   },
   mutations: {
     pushList (state, res) {
-      for (let i = 0; i < state.limit; i++) {
-        state.list.push(res)
-      }
+      state.list = state.list.concat(res)
     }
   },
   actions: {
     request (context) {
-      // 模拟 http 请求，result 是返回结果
-      let result = {
-        name: '列表'
+      if (currentNum >= TOTAL) {
+        return
       }
-      context.commit('pushList', result)
+      let result = {
+        success: true,
+        data: []
+      }
+      for (let i = 0; i < context.state.limit; i++) {
+        result.data.push({
+          name: '列表'
+        })
+      }
+      return new Promise((resolve, reject) => {
+        // 模拟 http 请求，result 是返回结果
+        setTimeout(function () {
+          if (result.success) {
+            context.commit('pushList', result.data)
+            currentNum += context.state.limit
+            resolve(result.data)
+          } else {
+            reject(result.error)
+          }
+        }, 1500)
+      })
     }
   }
 })

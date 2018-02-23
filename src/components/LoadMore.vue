@@ -9,7 +9,8 @@
 import LoadingIcon from '../assets/loading.svg'
 
 export default {
-  data: function () {
+  name: 'load-more-plugin',
+  data () {
     return {
       loadingIcon: LoadingIcon,
       isLoading: false,
@@ -19,24 +20,26 @@ export default {
   props: ['wrap', 'request'], // wrap: 滚动列表容器ID, request: 滚动加载需要执行的方法
   mounted () {
     this.$nextTick(() => {
-      let wraper = document.getElementById(this.wrap)
-      let offset = wraper.offsetTop
-      console.log(window.innerHeight)
-      let reserveHeight = 50
-      // 滚动区域的高度 = 视口高度 - 偏移高度
-      wraper.style.height = (window.innerHeight - offset) + 'px'
-      wraper.addEventListener('scroll', (event) => {
-        console.log(666)
-        let scrollY = event.target.scrollTop
-        let clientHeight = event.target.clientHeight
-        let docHeight = Math.max(event.target.scrollHeight, event.target.clientHeight)
-        if (docHeight - (scrollY + clientHeight) < reserveHeight) {
+      let wrapper = document.getElementById(this.wrap)
+      // 滚动容器自身高度
+      let wrapperHeight = wrapper.clientHeight
+      // 滚动容器相对于页面顶部偏移的 Y 值
+      let offsetY = wrapper.offsetTop
+      // 浏览器视口高度
+      let windowHeight = window.innerHeight || document.documentElement.clientHeight
+      // 规定距离滚动列表底部距离小于该值，则开始加载下一页
+      let reserveHeight = 200
+      // 页面滚动距离
+      let scrollY = 0
+      window.addEventListener('scroll', (event) => {
+        scrollY = document.documentElement.scrollTop || document.body.scrollTop
+        if (wrapperHeight + offsetY - scrollY - windowHeight < reserveHeight) {
           if (!this.isLoading && !this.loaded) {
             console.log('开始request')
             this.isLoading = true
             this.request().then((res) => {
-              console.log('回调')
-              if (res.data && res.data.length > 0) {
+              console.log('回调', res)
+              if (res && res.length > 0) {
                 console.log('结束request')
                 this.isLoading = false
                 return
@@ -47,7 +50,7 @@ export default {
             })
           }
         }
-      }, false)
+      })
     })
   }
 }
