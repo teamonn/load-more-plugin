@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <ul class="data-list">
-      <li v-for="(item, key) in list" :key="key">假数据 {{key}}</li>
+      <li v-for="(item, key) in list" :key="key">假数据 {{key+1}}</li>
     </ul>
     <!-- <img src="./assets/logo.png" @click="increment(count)"> -->
     <!-- <load-more/> -->
@@ -18,6 +18,7 @@ export default {
     list: state => state.list
   }),
   created () {
+    this.request()
     this.request()
   },
   methods: {
@@ -42,7 +43,7 @@ export default {
   color: #2c3e50;
 }
 ul.data-list li {
-  padding: 8px 12px;
+  padding: 10px 12px;
   font-size: 17px;
 }
 </style>
