@@ -60,12 +60,13 @@ export default {
 .no-more {
   display: flex;
   justify-content: center;
-  height: 0.8rem;
-  line-height: 0.8rem;
+  height: 40px;
+  line-height: 40px;
   color: #9E9E9E;
 }
 .no-more img {
-  width: 0.8rem;
-  padding: 0.15rem;
+  width: 25px;
+  height: 25px;
+  padding: 7.5px;
 }
 </style>
