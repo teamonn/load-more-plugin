@@ -1,6 +1,6 @@
 # load-more-plugin
 
-> A Vue.js project
+> A Vue.js project. Vuejs实现的移动端上拉加载请求下一页数据的分页插件.
 
 ## Build Setup
 
