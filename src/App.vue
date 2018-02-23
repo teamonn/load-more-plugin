@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <ul class="data-list">
+    <h2>load-more-plugin 插件实例</h2>
+    <ul class="data-list" id="wrapper">
       <li v-for="(item, key) in list" :key="key">假数据 {{key+1}}</li>
     </ul>
     <!-- <img src="./assets/logo.png" @click="increment(count)"> -->
-    <!-- <load-more/> -->
+    <load-more wrap="wrapper" :request="request" />
   </div>
 </template>
 
 <script>
-// import LoadMore from './components/LoadMore'
+import LoadMore from './components/LoadMore'
 import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
@@ -29,7 +30,7 @@ export default {
     // }
   },
   components: {
-    // LoadMore
+    LoadMore
   }
 }
 </script>
@@ -41,6 +42,11 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+h2 {
+  font-size: 18px;
+  text-align: center;
+  line-height: 40px;
 }
 ul.data-list li {
   padding: 10px 12px;

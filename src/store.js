@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     list: [],
-    limit: 10
+    limit: 15
   },
   mutations: {
     pushList (state, res) {

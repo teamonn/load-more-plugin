@@ -4,19 +4,29 @@
     {{isLoading? '加载中...' : '没有更多了'}}
   </p>
 </template>
+
 <script type="text/javascript">
-import LoadingIcon from '../../assets/loading.svg'
+import LoadingIcon from '../assets/loading.svg'
 
 export default {
-  props: ['wrap', 'request'],
+  data: function () {
+    return {
+      loadingIcon: LoadingIcon,
+      isLoading: false,
+      loaded: false
+    }
+  },
+  props: ['wrap', 'request'], // wrap: 滚动列表容器ID, request: 滚动加载需要执行的方法
   mounted () {
     this.$nextTick(() => {
       let wraper = document.getElementById(this.wrap)
       let offset = wraper.offsetTop
+      console.log(window.innerHeight)
       let reserveHeight = 50
       // 滚动区域的高度 = 视口高度 - 偏移高度
       wraper.style.height = (window.innerHeight - offset) + 'px'
       wraper.addEventListener('scroll', (event) => {
+        console.log(666)
         let scrollY = event.target.scrollTop
         let clientHeight = event.target.clientHeight
         let docHeight = Math.max(event.target.scrollHeight, event.target.clientHeight)
@@ -39,27 +49,20 @@ export default {
         }
       }, false)
     })
-  },
-  data: function () {
-    return {
-      loadingIcon: LoadingIcon,
-      isLoading: false,
-      loaded: false
-    }
   }
 }
 </script>
 
-<style lang="scss">
+<style>
 .no-more {
   display: flex;
   justify-content: center;
   height: 0.8rem;
   line-height: 0.8rem;
   color: #9E9E9E;
-  img {
-    width: 0.8rem;
-    padding: 0.15rem;
-  }
+}
+.no-more img {
+  width: 0.8rem;
+  padding: 0.15rem;
 }
 </style>
