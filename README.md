@@ -1,6 +1,6 @@
 # load-more-plugin
 
-> A Vue.js project. Vuejs实现的移动端上拉加载请求下一页数据的分页插件.
+> Vuejs实现的移动端上拉加载请求下一页数据的分页插件.
 
 ## Build Setup
 
@@ -19,3 +19,4 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
