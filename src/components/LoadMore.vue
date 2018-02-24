@@ -1,5 +1,5 @@
 <template>
-  <p class="no-more">
+  <p class="load-more">
     <img :src="loadingIcon" alt="" v-show="isLoading === undefined || isLoading">
     {{text}}
   </p>
@@ -45,14 +45,14 @@ export default {
 </script>
 
 <style>
-.no-more {
+.load-more {
   display: flex;
   justify-content: center;
   height: 40px;
   line-height: 40px;
   color: #9E9E9E;
 }
-.no-more img {
+.load-more img {
   width: 25px;
   height: 25px;
   padding: 7.5px;
