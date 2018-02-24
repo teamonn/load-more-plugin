@@ -8,21 +8,38 @@
 <script type="text/javascript">
 export default {
   name: 'load-more-plugin',
-  props: ['loadingIcon', 'isLoading', 'text', 'request'],
+  data () {
+    return {
+      winHeight: window.innerHeight || document.documentElement.clientHeight // 浏览器视口高度
+    }
+  },
+  props: ['loadingIcon', 'isLoading', 'text', 'reserveDistance', 'request'], // reserveDistance: 不触发回调的最大距离
   mounted () {
     this.$nextTick(() => {
-      // 浏览器视口高度
-      let windowHeight = window.innerHeight || document.documentElement.clientHeight
-      // 规定距离滚动列表底部距离小于该值，则执行回调方法
-      let reserveHeight = 200
+      this.check()
       window.addEventListener('scroll', (event) => {
-        console.log(this.$el.getBoundingClientRect().top - windowHeight)
-        if (this.$el.getBoundingClientRect().top - windowHeight < reserveHeight) {
+        // getBoundingClientRect().top: 获取某个dom节点顶部距离视口最顶部的距离
+        let distance = this.$el.getBoundingClientRect().top - this.winHeight
+        if (distance < this.reserveDistance) {
           // 执行父组件回调方法
           this.$emit('load')
         }
       })
     })
+  },
+  updated () {
+    this.check()
+  },
+  methods: {
+    check () {
+      // 获取当前dom节点顶部距离视口最顶部的距离
+      let distance = this.$el.getBoundingClientRect().top - this.winHeight
+      if (distance < 0) {
+        console.log('距离是负数')
+        // 主动执行父组件回调方法
+        this.$emit('load')
+      }
+    }
   }
 }
 </script>

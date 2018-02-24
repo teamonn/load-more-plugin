@@ -8,6 +8,7 @@
       :loadingIcon="loadingIcon"
       :isLoading="isLoading"
       :text="loadText"
+      :reserveDistance="reserveDistance"
       @load="loadNextPage"
     />
   </div>
@@ -25,16 +26,14 @@ export default {
       loadingIcon: LoadingIcon,
       isLoading: undefined,
       loaded: false,
-      loadText: '加载中...'
+      loadText: '加载中...',
+      limit: 15,
+      reserveDistance: 200
     }
   },
   computed: mapState({
     list: state => state.list
   }),
-  created () {
-    this.request()
-    this.request()
-  },
   methods: {
     ...mapMutations(['increment']),
     ...mapActions(['request']),
@@ -42,17 +41,18 @@ export default {
       if (!this.isLoading && !this.loaded) {
         console.log('开始request')
         this.isLoading = true
-        this.request().then((res) => {
+        this.request(this.limit).then((res) => {
           console.log('回调', res)
-          if (res && res.length > 0) {
-            console.log('结束request')
+          if (res && res.length < this.limit) {
+            // 当前页是最后一页
+            console.log('结束request，返回无数据')
+            this.loaded = true
             this.isLoading = false
+            this.loadText = '没有更多了'
             return
           }
-          console.log('结束request，返回无数据')
-          this.loaded = true
+          console.log('结束request')
           this.isLoading = false
-          this.loadText = '没有更多了'
         })
       }
     }

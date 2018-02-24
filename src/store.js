@@ -9,8 +9,7 @@ let currentNum = 0
 
 const store = new Vuex.Store({
   state: {
-    list: [],
-    limit: 15
+    list: []
   },
   mutations: {
     pushList (state, res) {
@@ -18,15 +17,17 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    request (context) {
-      if (currentNum >= TOTAL) {
-        return
-      }
+    request (context, limit) {
       let result = {
         success: true,
         data: []
       }
-      for (let i = 0; i < context.state.limit; i++) {
+      if (currentNum >= TOTAL) {
+        return new Promise((resolve, reject) => {
+          resolve(result.data)
+        })
+      }
+      for (let i = 0; i < limit; i++) {
         result.data.push({
           name: '列表'
         })
@@ -36,7 +37,7 @@ const store = new Vuex.Store({
         setTimeout(function () {
           if (result.success) {
             context.commit('pushList', result.data)
-            currentNum += context.state.limit
+            currentNum += limit
             resolve(result.data)
           } else {
             reject(result.error)
