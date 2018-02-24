@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 // 限制模拟请求的最大数据量
-let TOTAL = 100
+let TOTAL = 60
 let currentNum = 0
 
 const store = new Vuex.Store({
