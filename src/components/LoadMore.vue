@@ -1,5 +1,5 @@
 <template>
-  <p class="load-more" v-show="status">
+  <p class="load-more">
     <img :src="loadingIcon" alt="" v-show="status === 1">
     {{getText}}
   </p>
@@ -72,7 +72,7 @@ export default {
       // 获取当前dom节点顶部距离视口最顶部的距离
       let distance = this.$el.getBoundingClientRect().top - this.winHeight
       if (distance < 0) {
-        console.log('距离是负数')
+        console.log('数据不足以产生滚动')
         // 主动执行父组件回调方法
         this.$emit('load')
       }
