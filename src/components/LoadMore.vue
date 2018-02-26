@@ -21,8 +21,7 @@ export default {
     },
     status: {
       type: Number,
-      required: false,
-      default: 0
+      required: true
     },
     loadingText: {
       type: String,
@@ -79,7 +78,7 @@ export default {
       }
     }
   },
-  LOAD_STATUS: { // 自定义当前组件加载状态映射关系
+  LOAD_STATUS: { // 定义当前组件加载状态映射关系
     HIDE: 0,
     LOADING: 1,
     LOADED: 2

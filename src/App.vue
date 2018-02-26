@@ -39,7 +39,7 @@ export default {
     ...mapMutations(['increment']),
     ...mapActions(['request']),
     loadNextPage () {
-      if (this.status === 0) {
+      if (this.status === LoadMore.LOAD_STATUS.HIDE) {
         console.log('开始request')
         // 按照组件映射关系，更改为加载中状态
         this.status = LoadMore.LOAD_STATUS.LOADING
@@ -61,9 +61,6 @@ export default {
   },
   components: {
     LoadMore
-  },
-  mounted () {
-    console.log(LoadMore)
   }
 }
 </script>
