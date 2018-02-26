@@ -54,12 +54,17 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.check()
+      let timer = null
       window.addEventListener('scroll', (event) => {
-        // getBoundingClientRect().top: 获取某个dom节点顶部距离视口最顶部的距离
-        let distance = this.$el.getBoundingClientRect().top - this.winHeight
-        if (distance < this.reserveDistance) {
-          // 执行父组件回调方法
-          this.$emit('load')
+        if (!timer) { // 函数节流，避免window滚动事件被触发太多次，限制300ms内的滚动再不执行后面代码
+          timer = setTimeout(() => {
+            let distance = this.$el.getBoundingClientRect().top - this.winHeight
+            if (distance < this.reserveDistance) {
+              // 执行父组件回调方法
+              this.$emit('load')
+            }
+            timer = null
+          }, 300)
         }
       })
     })
