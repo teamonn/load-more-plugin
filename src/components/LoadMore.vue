@@ -13,7 +13,27 @@ export default {
       winHeight: window.innerHeight || document.documentElement.clientHeight // 浏览器视口高度
     }
   },
-  props: ['loadingIcon', 'isLoading', 'text', 'reserveDistance', 'request'], // reserveDistance: 不触发回调的最大距离
+  props: {
+    loadingIcon: {
+      type: String,
+      required: false,
+      default: 'http://oz12kvgi5.bkt.clouddn.com/loading.svg'
+    },
+    isLoading: {
+      type: Boolean,
+      required: false,
+      default: undefined
+    },
+    text: {
+      type: String,
+      required: true
+    },
+    reserveDistance: { // 不触发回调的最大距离
+      type: Number,
+      required: false,
+      default: 200
+    }
+  },
   mounted () {
     this.$nextTick(() => {
       this.check()

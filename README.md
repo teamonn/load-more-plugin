@@ -37,12 +37,16 @@ vue 文件的 template 中
 ## API
 
 ``` js
-* loadingIcon     // 加载动画的图片src
-* isLoading       // 是否正在加载数据
-* text            // loading组件的文字
-* reserveDistance // 不触发父组件回调的最大距离
-* load            // 需要加载时的回调函数
+- loadingIcon     // 加载动画的图片src(可选)
+- isLoading       // 是否正在加载数据，默认undefined(可选)
+- text            // loading组件的文字(必填)
+- reserveDistance // 不触发父组件回调的最大距离，默认200(可选)
 ```
+
+另外需要注意的一点就是，在父组件中实例化的时候需要挂载一个回调函数，方便该组件在需要的时候回调父组件的加载下一页方法。
+
+如demo中，```@load="loadNextPage"``` loadNextPage()表示需要加载时的回调函数，必填
+
 ## Build Setup
 
 ``` bash
