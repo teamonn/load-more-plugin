@@ -38,7 +38,7 @@ vue 文件的 template 中
 
 ``` js
 - loadingIcon     // 加载动画的图片src(可选)
-- isLoading       // 是否正在加载数据，默认undefined(可选)
+- isLoading       // 是否正在加载数据(必填)
 - text            // loading组件的文字(必填)
 - reserveDistance // 不触发父组件回调的最大距离，默认200(可选)
 ```

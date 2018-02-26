@@ -6,8 +6,9 @@
     </ul>
     <load-more
       :loadingIcon="loadingIcon"
-      :isLoading="isLoading"
-      :text="loadText"
+      :loadingText="loadingText"
+      :loadedText="loadedText"
+      :status="status"
       :reserveDistance="reserveDistance"
       @load="loadNextPage"
     />
@@ -24,9 +25,9 @@ export default {
   data () {
     return {
       loadingIcon: LoadingIcon,
-      isLoading: undefined,
-      loaded: false,
-      loadText: '加载中...',
+      status: 0, // 0: 隐藏，1: 正在加载，2: 加载完成
+      loadingText: '加载中...',
+      loadedText: '没有更多了',
       limit: 15,
       reserveDistance: 200
     }
@@ -38,27 +39,31 @@ export default {
     ...mapMutations(['increment']),
     ...mapActions(['request']),
     loadNextPage () {
-      if (!this.isLoading && !this.loaded) {
+      if (this.status === 0) {
         console.log('开始request')
-        this.isLoading = true
+        // 按照组件映射关系，更改为加载中状态
+        this.status = LoadMore.LOAD_STATUS.LOADING
         this.request(this.limit).then((res) => {
           console.log('回调', res)
           if (res && res.length < this.limit) {
             // 当前页是最后一页
             console.log('结束request，返回无数据')
-            this.loaded = true
-            this.isLoading = false
-            this.loadText = '没有更多了'
+            // 按照组件映射关系，更改为加载完成状态
+            this.status = LoadMore.LOAD_STATUS.LOADED
             return
           }
           console.log('结束request')
-          this.isLoading = false
+          // 按照组件映射关系，更改为隐藏状态
+          this.status = LoadMore.LOAD_STATUS.HIDE
         })
       }
     }
   },
   components: {
     LoadMore
+  },
+  mounted () {
+    console.log(LoadMore)
   }
 }
 </script>

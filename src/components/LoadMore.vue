@@ -1,7 +1,7 @@
 <template>
-  <p class="load-more">
-    <img :src="loadingIcon" alt="" v-show="isLoading === undefined || isLoading">
-    {{text}}
+  <p class="load-more" v-show="status">
+    <img :src="loadingIcon" alt="" v-show="status === 1">
+    {{getText}}
   </p>
 </template>
 
@@ -19,19 +19,37 @@ export default {
       required: false,
       default: 'http://oz12kvgi5.bkt.clouddn.com/loading.svg'
     },
-    isLoading: {
-      type: Boolean,
+    status: {
+      type: Number,
       required: false,
-      default: undefined
+      default: 0
     },
-    text: {
+    loadingText: {
       type: String,
-      required: true
+      required: false,
+      default: '加载中...'
+    },
+    loadedText: {
+      type: String,
+      required: false,
+      default: '没有更多了'
     },
     reserveDistance: { // 不触发回调的最大距离
       type: Number,
       required: false,
       default: 200
+    }
+  },
+  computed: {
+    getText () {
+      switch (this.status) {
+        case 0:
+          return ''
+        case 1:
+          return this.loadingText
+        case 2:
+          return this.loadedText
+      }
     }
   },
   mounted () {
@@ -60,6 +78,11 @@ export default {
         this.$emit('load')
       }
     }
+  },
+  LOAD_STATUS: { // 自定义当前组件加载状态映射关系
+    HIDE: 0,
+    LOADING: 1,
+    LOADED: 2
   }
 }
 </script>
