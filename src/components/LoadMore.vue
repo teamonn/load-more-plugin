@@ -7,7 +7,7 @@
 
 <script type="text/javascript">
 export default {
-  name: 'load-more-plugin',
+  name: 'load-more-plugin2',
   data () {
     return {
       winHeight: window.innerHeight || document.documentElement.clientHeight // 浏览器视口高度
